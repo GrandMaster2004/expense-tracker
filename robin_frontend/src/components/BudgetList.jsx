@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, Typography, Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+} from "@mui/material";
+import { toast } from "react-hot-toast";
 import { getBudgets, deleteBudget, updateBudget } from "../services/api";
 
 const BudgetList = () => {
@@ -22,6 +34,7 @@ const BudgetList = () => {
   const handleDelete = async (id) => {
     try {
       await deleteBudget(id);
+      toast.success("Budget deleted!");
       alert("Budget deleted!");
       fetchBudgets();
     } catch (error) {
@@ -41,10 +54,11 @@ const BudgetList = () => {
     try {
       await updateBudget(editData._id, editData);
       setEditData(null);
-      alert("Budget updated!");
+      toast.success("Budget updated!");
       fetchBudgets();
     } catch (error) {
-      console.error("Error updating budget:", error);
+      toast.error("Error updating budget");
+      // console.error("Error updating budget:", error);
     }
   };
 
@@ -58,16 +72,32 @@ const BudgetList = () => {
         {budgets.length > 0 ? (
           budgets.map((budget) => (
             <Grid item xs={12} sm={6} md={4} key={budget._id}>
-              <Card sx={{ minHeight: "180px", backgroundColor: "#f5f5f5", borderRadius: "15px" }}>
+              <Card
+                sx={{
+                  minHeight: "180px",
+                  backgroundColor: "#f5f5f5",
+                  borderRadius: "15px",
+                }}
+              >
                 <CardContent>
                   <Typography variant="h6">{budget.category}</Typography>
                   <Typography>Budget: ₹{budget.budgetAmount}</Typography>
                   <Typography>Month: {budget.month}</Typography>
                   <Typography>Year: {budget.year}</Typography>
-                  <Button variant="outlined" color="primary" onClick={() => handleEditClick(budget)} sx={{ mt: 1, mr: 1 }}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => handleEditClick(budget)}
+                    sx={{ mt: 1, mr: 1 }}
+                  >
                     Edit
                   </Button>
-                  <Button variant="outlined" color="error" onClick={() => handleDelete(budget._id)} sx={{ mt: 1 }}>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDelete(budget._id)}
+                    sx={{ mt: 1 }}
+                  >
                     Delete
                   </Button>
                 </CardContent>
@@ -123,7 +153,11 @@ const BudgetList = () => {
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setEditData(null)}>Cancel</Button>
-              <Button onClick={handleEditSave} variant="contained" color="primary">
+              <Button
+                onClick={handleEditSave}
+                variant="contained"
+                color="primary"
+              >
                 Save
               </Button>
             </DialogActions>

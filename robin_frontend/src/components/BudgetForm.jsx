@@ -35,11 +35,13 @@ const BudgetForm = ({ onBudgetAdded }) => {
     e.preventDefault();
     try {
       await addBudget(formData);
-      alert("Budget added successfully!");
+      toast.success("Budget added successfully!");
+      // alert("Budget added successfully!");
       setFormData({ category: "", budgetAmount: "", month: "", year: "" });
       if (onBudgetAdded) onBudgetAdded();
     } catch (error) {
-      console.error("Error adding budget:", error);
+      // toast.error("Error adding budget!");
+      // console.error("Error adding budget:", error);
       alert(error.response?.data?.message || "Error adding budget");
     }
   };

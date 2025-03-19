@@ -29,9 +29,9 @@ const SummaryCards = () => {
           axios.get(`${import.meta.env.VITE_BACKEND_URL}/transactions/recent`),
         ]);
 
-        console.log("Total Expenses:", totalRes.data);
-        console.log("Category Breakdown:", categoryRes.data);
-        console.log("Recent Transaction:", recentRes.data);
+        // console.log("Total Expenses:", totalRes.data);
+        // console.log("Category Breakdown:", categoryRes.data);
+        // console.log("Recent Transaction:", recentRes.data);
 
         setTotalExpenses(totalRes.data.totalExpense);
 
@@ -61,7 +61,7 @@ const SummaryCards = () => {
         <Card>
           <CardContent>
             <Typography variant="h6">Total Expenses</Typography>
-            <Typography variant="h4">${totalExpenses}</Typography>
+            <Typography variant="h4">₹{totalExpenses}</Typography>
           </CardContent>
         </Card>
       </Grid>
@@ -73,7 +73,7 @@ const SummaryCards = () => {
             {categoryBreakdown.length > 0 ? (
               categoryBreakdown.map((category, index) => (
                 <Typography key={index}>
-                  {category.category}: ${category.amount}
+                  {category.category}: ₹{category.amount}
                 </Typography>
               ))
             ) : (
@@ -89,7 +89,7 @@ const SummaryCards = () => {
             <Typography variant="h6">Most Recent Transaction</Typography>
             {recentTransaction ? (
               <>
-                <Typography>${recentTransaction.amount}</Typography>
+                <Typography>₹{recentTransaction.amount}</Typography>
                 <Typography>
                   {new Date(recentTransaction.date).toLocaleDateString()}
                 </Typography>
